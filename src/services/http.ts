@@ -1,7 +1,7 @@
 // src/services/http.ts
 const BASE =
   (import.meta.env.VITE_API_BASE_URL as string) ||
-  "https://localhost:44334/api"; // fallback seguro
+  "https://localhost:44334/api";
 
 function url(path: string) {
   return `${BASE}${path.startsWith("/") ? path : `/${path}`}`;
