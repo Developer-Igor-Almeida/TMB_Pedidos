@@ -1,11 +1,16 @@
-const BASE = (import.meta.env.VITE_API_BASE_URL as string) || "http://localhost:5100";
+// src/services/http.ts
+const BASE =
+  (import.meta.env.VITE_API_BASE_URL as string) ||
+  "https://localhost:44334/api"; // fallback seguro
 
 function url(path: string) {
-  return `${BASE}${path}`;
+  return `${BASE}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 export async function getJSON<T>(path: string): Promise<T> {
-  const res = await fetch(url(path));
+  const res = await fetch(url(path), {
+    headers: { "Content-Type": "application/json" },
+  });
   if (!res.ok) throw new Error(await res.text());
   return res.json() as Promise<T>;
 }
